@@ -36,6 +36,7 @@ check all using below commands
   kubectl get routetable
 `````  
 # vpc-xrd-composities
+`````
   kubectl  apply -f xrd.yml
   kubectl apply -f composition.yml
   kubectl apply -f claim.yml
