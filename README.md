@@ -29,11 +29,11 @@
 # vpc-direct
 `````
 kubectl apply -f vpc-direct/
-check all using below commands
-  kubectl get vpc
-  kubectl get subnets
-  kubectl get internetgateway
-  kubectl get routetable
+
+kubectl get vpc
+kubectl get subnets
+kubectl get internetgateway
+kubectl get routetable
 `````  
 # vpc-xrd-composities
 `````
