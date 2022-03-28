@@ -17,8 +17,8 @@ kubectl create namespace crossplane-system
 
 helm repo add crossplane-stable https://charts.crossplane.io/stable
 helm repo update
-`````
 helm install crossplane --namespace crossplane-system crossplane-stable/crossplane
+`````
 # Create User in AWS
   Create user with admin policy and get AWS_ACCESS_KEY and AWS_SECRET_ACCESS_KEY
 # export keys and save in file as below
