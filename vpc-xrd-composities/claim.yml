@@ -1,0 +1,10 @@
+---
+apiVersion: demovpc.com/v1alpha1
+kind: CompositeVpc
+metadata:
+  name: demovpc
+spec:
+  compositionRef:
+    name: vpc-aws
+  parameters:
+    VpcCidr: "192.168.0.0/16"

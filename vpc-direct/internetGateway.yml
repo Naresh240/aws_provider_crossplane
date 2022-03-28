@@ -1,0 +1,12 @@
+---
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: InternetGateway
+metadata:
+  name: production-internetgateway
+spec:
+  forProvider:
+    region: us-east-1
+    vpcIdRef:
+      name: production-vpc
+  providerConfigRef:
+    name: awsconfig

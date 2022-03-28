@@ -1,0 +1,41 @@
+---
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: Subnet
+metadata:
+  name: prod-subnet-1
+spec:
+  forProvider:
+    region: us-east-1
+    availabilityZone: us-east-1a
+    cidrBlock: 192.168.1.0/24
+    vpcIdRef:
+      name: production-vpc
+    tags:
+    - key: Environment
+      value: Production
+    - key: Name
+      value: prod-subnet-1
+    mapPublicIPOnLaunch: true
+  providerConfigRef:
+    name: awsconfig
+
+---
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: Subnet
+metadata:
+  name: prod-subnet-2
+spec:
+  forProvider:
+    region: us-east-1
+    availabilityZone: us-east-1b
+    cidrBlock: 192.168.2.0/24
+    vpcIdRef:
+      name: production-vpc
+    tags:
+    - key: Environment
+      value: Production
+    - key: Name
+      value: prod-subnet-2
+    mapPublicIPOnLaunch: true
+  providerConfigRef:
+    name: awsconfig

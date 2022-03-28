@@ -1,0 +1,86 @@
+---
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: vpc-aws
+  labels:
+    provider: aws
+    network: vpc
+spec:
+  compositeTypeRef:
+    apiVersion: demovpc.com/v1alpha1
+    kind: CompositeVpc
+  writeConnectionSecretsToNamespace: crossplane-system
+  resources:
+  - name: vpc-aws
+    base:
+      apiVersion: ec2.aws.crossplane.io/v1beta1
+      kind: VPC
+      metadata:
+        name: demo-vpc
+      spec:
+        forProvider:
+          region: us-east-1
+          enableDnsSupport: true
+          enableDnsHostNames: true
+          tags:
+          - key: Name
+            value: demo-vpc
+          instanceTenancy: default
+        providerConfigRef:
+          name: awsconfig
+    patches:
+    - fromFieldPath: spec.parameters.VpcCidr
+      toFieldPath: spec.forProvider.cidrBlock
+  - name: subnet-aws
+    base:
+      apiVersion: ec2.aws.crossplane.io/v1beta1
+      kind: Subnet
+      metadata:
+        name: demo-subnet
+      spec:
+        forProvider:
+          region: us-east-1
+          availabilityZone: us-east-1a
+          cidrBlock: 192.168.1.0/24
+          vpcIdRef:
+            name: demo-vpc
+          tags:
+          - key: Name
+            value: demo-subnet
+          mapPublicIPOnLaunch: true
+        providerConfigRef:
+          name: awsconfig
+  - name: InternetGateway
+    base:
+      apiVersion: ec2.aws.crossplane.io/v1beta1
+      kind: InternetGateway
+      metadata:
+        name: demo-internetgateway
+      spec:
+        forProvider:
+          region: us-east-1
+          vpcIdRef:
+            name: demo-vpc
+        providerConfigRef:
+          name: awsconfig
+  - name: RouteTable
+    base:
+      apiVersion: ec2.aws.crossplane.io/v1beta1
+      kind: RouteTable
+      metadata:
+        name: demo-routetable
+      spec:
+        forProvider:
+          region: us-east-1
+          routes:
+            - destinationCidrBlock: 0.0.0.0/0
+              gatewayIdRef:
+                name: demo-internetgateway
+          associations:
+            - subnetIdRef:
+                name: demo-subnet
+          vpcIdRef:
+            name: demo-vpc
+        providerConfigRef:
+          name: awsconfig
