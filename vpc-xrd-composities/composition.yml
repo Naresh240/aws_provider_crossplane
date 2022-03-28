@@ -16,7 +16,7 @@ spec:
       apiVersion: ec2.aws.crossplane.io/v1beta1
       kind: VPC
       metadata:
-        name: demo-vpc
+        name: demovpc
       spec:
         forProvider:
           region: us-east-1
@@ -24,10 +24,10 @@ spec:
           enableDnsHostNames: true
           tags:
           - key: Name
-            value: demo-vpc
+            value: demovpc
           instanceTenancy: default
         providerConfigRef:
-          name: aws-provider
+          name: awsconfig
     patches:
     - fromFieldPath: spec.parameters.vpcCidr
       toFieldPath: spec.forProvider.cidrBlock	  
@@ -41,14 +41,14 @@ spec:
         forProvider:
           region: us-east-1
           availabilityZone: us-east-1a
-          vpcIdRef:
-            name: demo-vpc
+          vpcIdSelector:
+            matchControllerRef: true
           tags:
           - key: Name
             value: demo-subnet
           mapPublicIPOnLaunch: true
         providerConfigRef:
-          name: aws-provider
+          name: awsconfig
     patches:
     - fromFieldPath: spec.parameters.subnetCidr
       toFieldPath: spec.forProvider.cidrBlock
@@ -61,10 +61,10 @@ spec:
       spec:
         forProvider:
           region: us-east-1
-          vpcIdRef:
-            name: demo-vpc
+          vpcIdSelector:
+            matchControllerRef: true            
         providerConfigRef:
-          name: aws-provider
+          name: awsconfig
   - name: RouteTable
     base:
       apiVersion: ec2.aws.crossplane.io/v1beta1
@@ -76,12 +76,12 @@ spec:
           region: us-east-1
           routes:
             - destinationCidrBlock: 0.0.0.0/0
-              gatewayIdRef:
-                name: demo-internetgateway
+              gatewayIdSelector:
+                matchControllerRef: true
           associations:
-            - subnetIdRef:
-                name: demo-subnet
-          vpcIdRef:
-            name: demo-vpc
+            - subnetIdSelector:
+                matchControllerRef: true
+          vpcIdSelector:
+            matchControllerRef: true
         providerConfigRef:
-          name: aws-provider
+          name: awsconfig

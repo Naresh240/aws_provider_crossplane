@@ -1,6 +1,6 @@
 ---
 apiVersion: demovpc.com/v1alpha1
-kind: compositevpcs
+kind: CompositeClaim
 metadata:
   name: demovpc
 spec:
