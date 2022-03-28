@@ -5,7 +5,6 @@ metadata:
   name: vpc-aws
   labels:
     provider: aws
-    network: vpc
 spec:
   compositeTypeRef:
     apiVersion: demovpc.com/v1alpha1
@@ -28,10 +27,10 @@ spec:
             value: demo-vpc
           instanceTenancy: default
         providerConfigRef:
-          name: awsconfig
+          name: aws-provider
     patches:
-    - fromFieldPath: spec.parameters.VpcCidr
-      toFieldPath: spec.forProvider.cidrBlock
+    - fromFieldPath: spec.parameters.vpcCidr
+      toFieldPath: spec.forProvider.cidrBlock	  
   - name: subnet-aws
     base:
       apiVersion: ec2.aws.crossplane.io/v1beta1
@@ -42,7 +41,6 @@ spec:
         forProvider:
           region: us-east-1
           availabilityZone: us-east-1a
-          cidrBlock: 192.168.1.0/24
           vpcIdRef:
             name: demo-vpc
           tags:
@@ -50,7 +48,10 @@ spec:
             value: demo-subnet
           mapPublicIPOnLaunch: true
         providerConfigRef:
-          name: awsconfig
+          name: aws-provider
+    patches:
+    - fromFieldPath: spec.parameters.subnetCidr
+      toFieldPath: spec.forProvider.cidrBlock
   - name: InternetGateway
     base:
       apiVersion: ec2.aws.crossplane.io/v1beta1
@@ -63,7 +64,7 @@ spec:
           vpcIdRef:
             name: demo-vpc
         providerConfigRef:
-          name: awsconfig
+          name: aws-provider
   - name: RouteTable
     base:
       apiVersion: ec2.aws.crossplane.io/v1beta1
@@ -83,4 +84,4 @@ spec:
           vpcIdRef:
             name: demo-vpc
         providerConfigRef:
-          name: awsconfig
+          name: aws-provider

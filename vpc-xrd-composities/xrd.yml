@@ -2,15 +2,15 @@
 apiVersion: apiextensions.crossplane.io/v1
 kind: CompositeResourceDefinition
 metadata:
-  name: demovpc.com
+  name: compositevpcs.demovpc.com
 spec:
   group: demovpc.com
   names:
     kind: CompositeVpc
     plural: compositevpcs
   claimNames:
-    kind: CompositeVpc
-    plural: compositevpcs
+    kind: CompositeClaim
+    plural: compositeclaims
   versions:
   - name: v1alpha1
     served: true
@@ -25,9 +25,12 @@ spec:
               parameters:
                 type: object
                 properties:
-                  VpcCidr:
+                  vpcCidr:
+                    type: string
+                  subnetCidr:
                     type: string
                 required:
-                - VpcCidr
+                - vpcCidr
+                - subnetCidr
             required:
             - parameters
