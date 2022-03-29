@@ -1,0 +1,36 @@
+---
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: sg-aws
+  labels:
+    provider: aws
+spec:
+  compositeTypeRef:
+    apiVersion: demosg.com/v1alpha1
+    kind: CompositeSg
+  writeConnectionSecretsToNamespace: crossplane-system
+  resources:
+  - name: sg-aws
+    base:
+      apiVersion: ec2.aws.crossplane.io/v1beta1
+      kind: SecurityGroup
+      metadata:
+        name: demosg
+      spec:
+        forProvider:
+          groupName: ssh-port
+          vpcIdSelector:
+            matchLabels:
+              name: demovpc
+          ingress:
+          - fromPort: 22
+            toPort: 22
+            ipProtocol: tcp
+            ipRanges:
+            - cidrIp: 0.0.0.0/0
+        providerConfigRef:
+          name: awsconfig
+    patches:
+    - fromFieldPath: spec.parameters.region
+      toFieldPath: spec.forProvider.region

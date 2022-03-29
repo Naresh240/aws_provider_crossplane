@@ -1,0 +1,10 @@
+---
+apiVersion: demosg.com/v1alpha1
+kind: CompositeSgClaim
+metadata:
+  name: demosg
+spec:
+  compositionRef:
+    name: sg-aws
+  parameters:
+    region: us-east-1 

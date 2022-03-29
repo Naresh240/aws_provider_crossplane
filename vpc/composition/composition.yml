@@ -17,6 +17,8 @@ spec:
       kind: VPC
       metadata:
         name: demovpc
+        labels:
+          name: demovpc
       spec:
         forProvider:
           region: us-east-1
@@ -37,12 +39,15 @@ spec:
       kind: Subnet
       metadata:
         name: demo-subnet
+        labels:
+          name: demosubnet
       spec:
         forProvider:
           region: us-east-1
           availabilityZone: us-east-1a
           vpcIdSelector:
-            matchControllerRef: true
+            matchLabels:
+              name: demovpc			
           tags:
           - key: Name
             value: demo-subnet
@@ -62,7 +67,8 @@ spec:
         forProvider:
           region: us-east-1
           vpcIdSelector:
-            matchControllerRef: true            
+            matchLabels:
+              name: demovpc            
         providerConfigRef:
           name: awsconfig
   - name: RouteTable
@@ -80,8 +86,10 @@ spec:
                 matchControllerRef: true
           associations:
             - subnetIdSelector:
-                matchControllerRef: true
+                matchLabels:
+                  name: demosubnet			
           vpcIdSelector:
-            matchControllerRef: true
+            matchLabels:
+              name: demovpc
         providerConfigRef:
           name: awsconfig

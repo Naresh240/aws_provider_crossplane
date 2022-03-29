@@ -1,0 +1,33 @@
+---
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: compositesgs.demosg.com
+spec:
+  group: demosg.com
+  names:
+    kind: Compositesg
+    plural: compositesgs
+  claimNames:
+    kind: CompositeSgClaim
+    plural: compositesgclaims
+  versions:
+  - name: v1alpha1
+    served: true
+    referenceable: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              parameters:
+                type: object
+                properties:
+                  region:
+                    type: string
+                required:
+                - region
+            required:
+            - parameters
