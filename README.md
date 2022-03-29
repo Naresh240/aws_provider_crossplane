@@ -23,8 +23,8 @@ helm install crossplane --namespace crossplane-system crossplane-stable/crosspla
   Create user with admin policy and get AWS_ACCESS_KEY and AWS_SECRET_ACCESS_KEY
 # export keys and save in file as below
 `````
-export aws_access_key_id=XXXXXXXXXXXXXXXXXXXXXXXXXXX
-export aws_secret_access_key=XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+export AWS_ACCESS_KEY_ID=XXXXXXXXXXXXXXXXXXXXXXXXXXX
+export AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 echo "[default]
 aws_access_key_id = $AWS_ACCESS_KEY_ID
