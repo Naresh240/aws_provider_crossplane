@@ -40,19 +40,28 @@ kubectl create secret generic aws-creds -n crossplane-system --from-file=creds=.
 kubectl apply -f aws-provider.yml
 kubectl apply -f providerConfig.yml
 ````` 
-# vpc-direct
+# rds
 `````
-kubectl apply -f vpc-direct/
+kubectl apply -f rds/
 
 kubectl get vpc
 kubectl get subnets
 kubectl get internetgateway
 kubectl get routetable
+kubectl get securitygroup
+kubectl get rdsinstance
 `````  
-# vpc-xrd-composities
+# connect database
+  Secret will create "production-rds-conn-string" with this name. we need to debug in different approches
+ 
+```` Approch: 1 ````
+````
+kubectl get secrets/production-rds-conn-string --template='{{.data.password | base64decode}}'
+````
+```` Approch: 2 ````
 `````
-kubectl  apply -f xrd.yml
-kubectl apply -f composition.yml
-kubectl apply -f claim.yml
-``````
+kubectl edit secrets production-rds-conn-string
 
+# Copy password and decode it using below step
+echo -n "encode-password" | base64 --decode
+`````
