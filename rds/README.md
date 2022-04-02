@@ -51,7 +51,7 @@ kubectl get routetable
 kubectl get securitygroup
 kubectl get rdsinstance
 `````  
-# connect database
+# Decode Database Password
   Secret will create "production-rds-conn-string" with this name. we need to debug in different approches
  
 ```` Approch: 1 ````
@@ -64,4 +64,14 @@ kubectl edit secrets production-rds-conn-string
 
 # Copy password and decode it using below step
 echo -n "encode-password" | base64 --decode
+`````
+# Connect to database
+`````
+mysql -u <username> -p <decoded-password>
+
+# default values:
+  username=admin
+  database=mysql
+  password=<decoded-password>
+  host=<end-point>
 `````
