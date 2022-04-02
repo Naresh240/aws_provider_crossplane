@@ -21,7 +21,7 @@ helm install crossplane --namespace crossplane-system crossplane-stable/crosspla
 `````
 # Create User in AWS
   Create user with admin policy and get AWS_ACCESS_KEY and AWS_SECRET_ACCESS_KEY
-# export keys and save in file as below
+# Export keys and save in file as below
 `````
 export AWS_ACCESS_KEY_ID=XXXXXXXXXXXXXXXXXXXXXXXXXXX
 export AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -40,7 +40,7 @@ kubectl create secret generic aws-creds -n crossplane-system --from-file=creds=.
 kubectl apply -f aws-provider.yml
 kubectl apply -f providerConfig.yml
 ````` 
-# rds
+# RDS
 `````
 kubectl apply -f rds/
 
