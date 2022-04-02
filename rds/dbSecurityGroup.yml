@@ -1,0 +1,13 @@
+apiVersion: database.aws.crossplane.io/v1beta1
+kind: DBSubnetGroup
+metadata:
+  name: prod-subnet-group
+spec:
+  forProvider:
+    region: us-east-1
+    description: "Prod Subnet group"
+    subnetIdRefs:
+      - name: prod-subnet-2
+      - name: prod-subnet-1
+  providerConfigRef:
+    name: awsconfig
